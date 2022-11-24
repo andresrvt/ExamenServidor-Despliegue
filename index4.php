@@ -1,8 +1,12 @@
 <?php
 //Includes: Faltan
-
+include("Cliente.php");
+include("Soporte.php");
+include("CintaVideo.php");
+include("Juego.php");
+include("Disco.php");
 //instanciamos un par de objetos cliente
-/*
+
 $cliente1 = new Cliente("Bruce Wayne", 23);
 $cliente2 = new Cliente("Clark Kent", 33);
 
