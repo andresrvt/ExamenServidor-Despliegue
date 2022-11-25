@@ -1,12 +1,14 @@
 <?php
-include_once("Soporte.php");
+include_once("Juego.php");
+include_once("Disco.php");
+include_once("CintaVideo.php");
 include_once("Cliente.php");
     class VideoClub extends Soporte{
 
         private $productos = array();
-        private int $numProductos;
+        private int $numProductos=0;
         private $socios = array();
-        private int $numSocios;
+        private int $numSocios=0;
 
         function __construct(
             private string $nombre,
@@ -15,47 +17,54 @@ include_once("Cliente.php");
         }
 
         private function incluirProducto(Soporte $soporte){
-            $this->productos[] = $soporte
+            $this->productos[] = $soporte;
         }
         function incluirCintaVideo(string $tituto, int $precio, int $duracion){
-            $cintVideo = new CintaVideo($tituto, $this->numProductos, $precio,$duracion);
+            $cintaVideo = new CintaVideo($tituto, $this->numProductos, $precio,$duracion);
             $this -> numProductos++; 
+            $this->incluirProducto($cintaVideo);
         }
 
         function incluirDVD(string $tituto, int $precio, string $idiomas, string $pantalla){
             $dvd = new Disco($tituto,$this->numProductos,$precio,$idiomas,$pantalla); 
             $this -> numProductos++; 
+            $this->incluirProducto($dvd);
         }
 
         function incluirJuego(string $tituto, int $precio, string $consola, int $minJ, int $maxJ){
-            $cintVideo = new Juego($tituto,$this->numProductos,$precio,$consola, $minJ, $maxJ); 
-            $this -> numProductos++; 
+            $juego = new Juego($tituto,$this->numProductos,$precio,$consola, $minJ, $maxJ); 
+            $this -> numProductos++;
+            $this->incluirProducto($juego); 
         }
-        function incluirSocio(string $nombre, int $maxAlquileresConcurrente = 3){
+        function incluirSocio(string $nombre){
             $socio = new Cliente($nombre, $this->numSocios);
             $this -> numSocios++; 
+            $this->socios[] = $socio;
         }
         function listarProductos(){
-            for ($i=0; $i < count($this->productos); $i++) {
-                if ($i != count($this->productos) - 1) {
-                  echo $this->productos[$i] .  " , <br>" ;  
-                }else{
-                    echo $this->productos[$i];
-                }
+            echo "<br>";
+            foreach ($this->productos as $key) {
+                print_r($key);
+                echo "<br>";
             }
         }
         function listarSocios(){
-            for ($i=0; $i < count($this->productos); $i++) {
-                if ($i != count($this->productos) - 1) {
-                  echo $this->productos[$i] .  " , <br>" ;  
-                }else{
-                    echo $this->productos[$i];
-                }
+            echo "<br>";
+            foreach ($this->socios as $key) {
+                print_r($key);
+                echo "<br>";
             }
         }
-
-        function alquilarSocioProducto(int $numProductos, int $numSocios){
-
+        function alquilaSocioProducto(int $numProductos, int $numSocios){
+            foreach($this->socios as $value){
+                if ($value->getNumero() == $numSocios) {
+                    foreach($this->productos as $key){
+                        if ($key->getNumero() == $numProductos) {
+                            $value->alquilar($key);
+                        }
+                    }
+                }
+            }
         }
     }
 ?>

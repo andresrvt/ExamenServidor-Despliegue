@@ -30,7 +30,7 @@ $cliente1->alquilar($soporte1);
 //este soporte no lo va a poder alquilar
 $cliente1->alquilar($soporte4);
 //este soporte no lo tiene alquilado
-$cliente1->devolver(4);
+$cliente1->devolver(23);
 //devuelvo un soporte que sí que tiene alquilado
 $cliente1->devolver(2);
 //alquilo otro soporte

@@ -1,7 +1,7 @@
 <?php
     class Cliente {
         private $soportesAlquilados = array();
-        private int $numSoportesAlquilados;
+        private int $numSoportesAlquilados=0;
         private int $maxAlquilerConcurrente = 3;
 
         function __construct(
@@ -39,17 +39,16 @@
 
         function tieneAlquilado (Soporte $soporte):bool{
             if (in_array($soporte, $this->soportesAlquilados)) {
-                return false;
-            }else{
                 return true;
+            }else{
+                return false;
             }
         }
    
 
         function alquilar (Soporte $soporte):bool{
-            $this->numSoportesAlquilados=0;
             echo "<br>";
-            if (($this->tieneAlquilado($soporte))&& $this->numSoportesAlquilados < $this->maxAlquilerConcurrente) {
+            if ((!$this->tieneAlquilado($soporte))&& ($this->numSoportesAlquilados < $this->maxAlquilerConcurrente)) {
                 $this->numSoportesAlquilados++;
                 $this->soportesAlquilados[] = $soporte;
                 echo "Se ha alquilado correctamente";
@@ -76,8 +75,8 @@
         function listaAlquileres(){
             echo "<br>";
             foreach ($this->soportesAlquilados as $pitumba=>$key) {
-                echo $pitumba.  " , <br>" ;  
-                echo $pitumba;
+                print_r($key);
+                echo "<br>";
             }
         }
     }
