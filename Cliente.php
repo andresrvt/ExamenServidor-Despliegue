@@ -47,38 +47,37 @@
    
 
         function alquilar (Soporte $soporte):bool{
-            $this->numSoportesAlquilados = 0;
-            foreach ($soporte as $pitumba) {
-                if (($this->tieneAlquilado($soporte))&&$this->numSoportesAlquilados<$this->maxAlquilerConcurrente) {
-                    $this->numSoportesAlquilados++;
-                    $pitumba.array_push($this->soportesAlquilados);
-                    echo "<br>Se ha alquilado " . $pitumba;
-                    return true;
-                }else{
-                    echo "<br>No se ha podido alquilar " . $pitumba;
-                    return false;
-                }
-            }
-        }
-
-        function devolver ($numSoportesAlquilados):bool{
-                if ($numSoportesAlquilados>0) {
-                $this->numSoportesAlquilados = 0;
-                echo "Devolución de realizada con éxito<br>";
+            $this->numSoportesAlquilados=0;
+            echo "<br>";
+            if (($this->tieneAlquilado($soporte))&& $this->numSoportesAlquilados < $this->maxAlquilerConcurrente) {
+                $this->numSoportesAlquilados++;
+                $this->soportesAlquilados[] = $soporte;
+                echo "Se ha alquilado correctamente";
                 return true;
             }else{
-                echo "No se ha podido realizar la devolución.<br>";
+                echo "No se ha podido alquilar";
                 return false;
             }
         }
 
-        function listaAlquileres(){
-            for ($i=0; $i < count($this->soportesAlquilados); $i++) {
-                if ($i != count($this->soportesAlquilados) - 1) {
-                  echo $this->soportesAlquilados[$i] .  " , <br>" ;  
-                }else{
-                    echo $this->soportesAlquilados[$i];
+        function devolver (int $numSoportesAlquilados):bool{
+            echo "<br>";
+            foreach($this->soportesAlquilados as $pitumba => $key){
+                if ($key->getNumero() == $numSoportesAlquilados) {
+                    unset($this->soportesAlquilados[array_search($key,$this->soportesAlquilados)]);
+                    echo "Devolución de realizada con éxito";
+                    return true;
                 }
+            }
+            echo "No se ha podido realizar la devolución.";
+            return false;
+        }
+
+        function listaAlquileres(){
+            echo "<br>";
+            foreach ($this->soportesAlquilados as $pitumba=>$key) {
+                echo $pitumba.  " , <br>" ;  
+                echo $pitumba;
             }
         }
     }

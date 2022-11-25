@@ -1,7 +1,6 @@
 <?php
 //Includes: Faltan
 include("Cliente.php");
-include("Soporte.php");
 include("CintaVideo.php");
 include("Juego.php");
 include("Disco.php");
