@@ -1,6 +1,11 @@
 <?php
 
 namespace ExamenServidorDespliegue\app;
+
+use ExamenServidorDespliegue\util\ClienteNoEncontradoException;
+use ExamenServidorDespliegue\util\CupoSuperadoException;
+use ExamenServidorDespliegue\util\SoporteYaAlquiladoException;
+
 include_once("./autoload.php");
 include_once("Juego.php");
 include_once("Disco.php");
@@ -57,16 +62,34 @@ include_once("Cliente.php");
                 echo "<br>";
             }
         }
-        function alquilaSocioProducto(int $numProductos, int $numSocios){
-            foreach($this->socios as $value){
-                if ($value->getNumero() == $numSocios) {
-                    foreach($this->productos as $key){
-                        if ($key->getNumero() == $numProductos) {
-                            $value->alquilar($key);
+        public function alquilaSocioProducto(int $numeroCliente, int $numeroSoporte)
+        {
+            $cliente = "";
+            try {
+                foreach ($this->socios as  $clientes) {
+                    if ($clientes->getNumero() == $numeroCliente) {
+                        $cliente = $clientes; 
+                        try {
+                            foreach ($this->productos as $producto) {
+                                if ($producto->getNumero() == $numeroSoporte) {
+                                    $clientes->alquilar($producto);
+                                    return $this;
+                                }
+                            }
+                        } catch (SoporteYaAlquiladoException $e) {
+                            echo $e->getMessage();
+                        } catch (CupoSuperadoException $e) {
+                            echo $e->getMessage();
                         }
                     }
                 }
+                if ($cliente == "") {
+                    throw new ClienteNoEncontradoException();
+                }
+            } catch (ClienteNoEncontradoException $e) {
+                echo $e->getMessage();
             }
+            return $this;
         }
     }
 ?>

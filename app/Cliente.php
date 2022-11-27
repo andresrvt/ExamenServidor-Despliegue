@@ -1,15 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-
 namespace ExamenServidorDespliegue\app;
-
 use ExamenServidorDespliegue\util\CupoSuperadoException;
 use ExamenServidorDespliegue\util\SoporteNoEncontradoException;
 use ExamenServidorDespliegue\util\SoporteYaAlquiladoException;
-
-include_once("./autoload.php");
     class Cliente {
         private $soportesAlquilados = array();
         private int $numSoportesAlquilados=0;
@@ -19,6 +13,7 @@ include_once("./autoload.php");
             public string $nombre,
             private int $numero,
         ){
+
         }
         /**
          * Get the value of numSoportesAlquilados
@@ -63,23 +58,27 @@ include_once("./autoload.php");
                     $this->numSoportesAlquilados++;
                     $this->soportesAlquilados[] = $soporte;
                     echo "Se ha alquilado correctamente";
-                    $soporte -> alquilado = true;
-                    return $this;
+                    
+                $soporte -> alquilado = true;
+                return $this;
                 }else{
-                    throw new CupoSuperadoException();
+                    throw new CupoSuperadoException;
                 }
-                    }else{
-                        throw new SoporteYaAlquiladoException();
-                    }
+            }else{
+                throw new SoporteYaAlquiladoException;
+            }
         }
-
-        function devolver (int $numSoportesAlquilados){
+        public function devolver(int $numSoporte){
             echo "<br>";
-            foreach($this->soportesAlquilados as $objeto => $key){
-                if ($key->getNumero() == $numSoportesAlquilados) {
-                    unset($this->soportesAlquilados[array_search($key,$this->soportesAlquilados)]);
-                    echo "Devolución de realizada con éxito";
-                    $key->alquilado = false;
+            foreach ($this->soportesAlquilados as $pitumba => $obj) {
+                if ($obj->getNumero() == $numSoporte) {
+                    echo "<br>El soporte estaba alquilado";
+                    $this->numSoportesAlquilados--;
+                    unset($this->soportesAlquilados[$pitumba]);
+                    echo "<br>El soporte ha sido devuelto con éxito";
+    
+                    $obj->alquilado=false;
+                    return $this;
                 }
             }
             throw new SoporteNoEncontradoException();
