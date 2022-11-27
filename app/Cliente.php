@@ -1,6 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+
 namespace ExamenServidorDespliegue\app;
+
+use ExamenServidorDespliegue\util\CupoSuperadoException;
+use ExamenServidorDespliegue\util\SoporteNoEncontradoException;
+use ExamenServidorDespliegue\util\SoporteYaAlquiladoException;
+
 include_once("./autoload.php");
     class Cliente {
         private $soportesAlquilados = array();
@@ -11,7 +19,6 @@ include_once("./autoload.php");
             public string $nombre,
             private int $numero,
         ){
-
         }
         /**
          * Get the value of numSoportesAlquilados
@@ -49,30 +56,33 @@ include_once("./autoload.php");
         }
    
 
-        function alquilar (Soporte $soporte):bool{
+        function alquilar (Soporte $soporte){
             echo "<br>";
-            if ((!$this->tieneAlquilado($soporte))&& ($this->numSoportesAlquilados < $this->maxAlquilerConcurrente)) {
-                $this->numSoportesAlquilados++;
-                $this->soportesAlquilados[] = $soporte;
-                echo "Se ha alquilado correctamente";
-                return true;
-            }else{
-                echo "No se ha podido alquilar";
-                return false;
-            }
+            if ((!$this->tieneAlquilado($soporte))) {
+                if ($this->numSoportesAlquilados < $this->maxAlquilerConcurrente) {
+                    $this->numSoportesAlquilados++;
+                    $this->soportesAlquilados[] = $soporte;
+                    echo "Se ha alquilado correctamente";
+                    $soporte -> alquilado = true;
+                    return $this;
+                }else{
+                    throw new CupoSuperadoException();
+                }
+                    }else{
+                        throw new SoporteYaAlquiladoException();
+                    }
         }
 
-        function devolver (int $numSoportesAlquilados):bool{
+        function devolver (int $numSoportesAlquilados){
             echo "<br>";
-            foreach($this->soportesAlquilados as $pitumba => $key){
+            foreach($this->soportesAlquilados as $objeto => $key){
                 if ($key->getNumero() == $numSoportesAlquilados) {
                     unset($this->soportesAlquilados[array_search($key,$this->soportesAlquilados)]);
                     echo "Devolución de realizada con éxito";
-                    return true;
+                    $key->alquilado = false;
                 }
             }
-            echo "No se ha podido realizar la devolución.";
-            return false;
+            throw new SoporteNoEncontradoException();
         }
 
         function listaAlquileres(){

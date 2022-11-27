@@ -12,6 +12,7 @@ include_once("./autoload.php");
         ) {
         }
         public const IVA = 0.21;
+        public bool $alquilado = false;
 
         /**
          * Get the value of precio
