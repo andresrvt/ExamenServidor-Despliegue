@@ -1,6 +1,7 @@
 <?php
 
-include ("Disco.php");
+include "autoload.php";
+use ExamenServidorDespliegue\app\Disco;
 
 $miDisco = new Disco("Origen", 24, 15, "es,en,fr", "16:9");
 echo "<strong>" . $miDisco->titulo . "</strong>";

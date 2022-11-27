@@ -1,22 +1,24 @@
 <?php
 
-include_once("Soporte.php");
-    class Disco extends Soporte{
+namespace ExamenServidorDespliegue\app;
+include_once("./autoload.php");
 
+include_once("Soporte.php");
+    class CintaVideo extends Soporte{
 
         public function __construct(
             string $titulo,
             int $numero,
             float $precio,
-            public string $idiomas,
-            private string $formatPantalla
+            private int $duracion
         )
         {
             parent::__construct($titulo,$numero,$precio);
         }
+        
+
         public function muestraResumen(){
-            echo "<br>El idioma es: " . $this->idiomas . " y el formato de la pantalla es: " . $this->formatPantalla;
+            echo "<br>La cinta de video dura: " . $this->duracion . "min";
         }
     }    
-
 ?>

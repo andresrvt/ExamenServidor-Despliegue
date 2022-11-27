@@ -1,4 +1,7 @@
 <?php
+
+namespace ExamenServidorDespliegue\app;
+include_once("./autoload.php");
 include_once("Soporte.php");
     class Juego extends Soporte{
 

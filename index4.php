@@ -1,9 +1,10 @@
 <?php
 //Includes: Faltan
-include("Cliente.php");
-include("CintaVideo.php");
-include("Juego.php");
-include("Disco.php");
+include "autoload.php";
+use ExamenServidorDespliegue\app\Cliente;
+use ExamenServidorDespliegue\app\Juego;
+use ExamenServidorDespliegue\app\Disco;
+use ExamenServidorDespliegue\app\CintaVideo;
 //instanciamos un par de objetos cliente
 
 $cliente1 = new Cliente("Bruce Wayne", 23);

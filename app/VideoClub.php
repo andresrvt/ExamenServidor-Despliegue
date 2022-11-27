@@ -1,4 +1,7 @@
 <?php
+
+namespace ExamenServidorDespliegue\app;
+include_once("./autoload.php");
 include_once("Juego.php");
 include_once("Disco.php");
 include_once("CintaVideo.php");
@@ -15,7 +18,6 @@ include_once("Cliente.php");
         ){
 
         }
-
         private function incluirProducto(Soporte $soporte){
             $this->productos[] = $soporte;
         }

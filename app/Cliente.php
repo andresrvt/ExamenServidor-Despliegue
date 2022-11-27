@@ -1,4 +1,7 @@
 <?php
+
+namespace ExamenServidorDespliegue\app;
+include_once("./autoload.php");
     class Cliente {
         private $soportesAlquilados = array();
         private int $numSoportesAlquilados=0;

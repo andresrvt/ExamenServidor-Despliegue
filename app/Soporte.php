@@ -1,5 +1,9 @@
 <?php
-    class Soporte{
+
+namespace ExamenServidorDespliegue\app;
+include_once("./autoload.php");
+    //Cuando tenemos una clase abstracta no podemos instanciar la clase, por lo que no podremos.
+    abstract class Soporte implements Resumible{
 
         public function __construct(
             public string $titulo,
@@ -7,8 +11,6 @@
             private float $precio
         ) {
         }
-
-
         public const IVA = 0.21;
 
         /**
